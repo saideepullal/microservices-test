@@ -17,7 +17,7 @@ public class ServiceController {
 	@Autowired
 	Environment environment;
 	
-	@Value("test.property")
+	@Value("123")
 	String cloudconfigProperty;
 	
 	@GetMapping("/getproperty")
@@ -26,7 +26,7 @@ public class ServiceController {
 		body.put("hardcodedProperty", "This is hardcoded");
 		String sampleProperty = environment.getProperty("sample.property");
 		body.put("propertyFromAppProperties", sampleProperty);
-
+		body.put("propertyFromCloudConfig", cloudconfigProperty);
 		return new ResponseEntity<Map<String,Object>>(body, HttpStatus.OK);
 	}
 

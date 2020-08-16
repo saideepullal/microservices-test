@@ -12,3 +12,8 @@ config-server/.mvn/wrapper/maven-wrapper.properties
 config-server/.mvn/wrapper/MavenWrapperDownloader.java
 config-server/mvnw
 config-server/mvnw.cmd
+gateway-service/mvnw
+gateway-service/.mvn/wrapper/MavenWrapperDownloader.java
+gateway-service/.mvn/wrapper/maven-wrapper.jar
+gateway-service/.mvn/wrapper/maven-wrapper.properties
+gateway-service/mvnw.cmd
