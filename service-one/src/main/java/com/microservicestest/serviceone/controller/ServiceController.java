@@ -17,7 +17,7 @@ public class ServiceController {
 	@Autowired
 	Environment environment;
 	
-	@Value("123")
+	@Value("${test.property}")
 	String cloudconfigProperty;
 	
 	@GetMapping("/getproperty")
