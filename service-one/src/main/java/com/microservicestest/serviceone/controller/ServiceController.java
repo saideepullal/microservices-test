@@ -3,13 +3,19 @@ package com.microservicestest.serviceone.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.ModelAndView;
+
 
 @Controller
 public class ServiceController {
@@ -28,6 +34,20 @@ public class ServiceController {
 		body.put("propertyFromAppProperties", sampleProperty);
 		body.put("propertyFromCloudConfig", cloudconfigProperty);
 		return new ResponseEntity<Map<String,Object>>(body, HttpStatus.OK);
+	}
+	
+	@GetMapping("/landingpage")
+	public ModelAndView loadLandingPage(HttpServletRequest request) {
+		HttpSession currentSession = request.getSession(false);
+		if (currentSession != null) {
+			Object securityContext = currentSession.getAttribute("securityContext");
+			if (securityContext != null) {
+				User currentUserSecurityContext = (User) securityContext;
+
+			}
+		}
+
+		return new ModelAndView("landingpage");
 	}
 
 }

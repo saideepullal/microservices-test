@@ -1,9 +1,12 @@
 package com.microservicestest.gatewayservice.filter;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
 import com.netflix.zuul.ZuulFilter;
@@ -22,8 +25,16 @@ public class ZuulLoggingFilter extends ZuulFilter {
 
 	@Override
 	public Object run() throws ZuulException {
-		HttpServletRequest request = RequestContext.getCurrentContext().getRequest();
+		RequestContext context = RequestContext.getCurrentContext();
+		HttpServletRequest request = context.getRequest();
 		logger.info("Current Routed Request URL ->  "+request.getRequestURL());
+		
+		HttpSession httpSession = context.getRequest().getSession(false);
+		if(httpSession != null) {
+			User userSecurityContext = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			httpSession.setAttribute("securityContext",userSecurityContext);
+		}
+
 		return null;
 	}
 
