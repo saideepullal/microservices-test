@@ -38,16 +38,22 @@ public class ServiceController {
 	
 	@GetMapping("/landingpage")
 	public ModelAndView loadLandingPage(HttpServletRequest request) {
+		ModelAndView modelAndView = new ModelAndView("landingpage");
 		HttpSession currentSession = request.getSession(false);
 		if (currentSession != null) {
 			Object securityContext = currentSession.getAttribute("securityContext");
 			if (securityContext != null) {
 				User currentUserSecurityContext = (User) securityContext;
+				modelAndView.addObject("userName", currentUserSecurityContext.getUsername());
+				modelAndView.addObject("authorities", currentUserSecurityContext.getAuthorities());
+				modelAndView.addObject("isNonExpired", currentUserSecurityContext.isAccountNonExpired());
+				modelAndView.addObject("isNonLocked", currentUserSecurityContext.isAccountNonLocked());
+				modelAndView.addObject("hasPasswordExpired",currentUserSecurityContext.isCredentialsNonExpired());
 
 			}
 		}
 
-		return new ModelAndView("landingpage");
+		return modelAndView;
 	}
 
 }

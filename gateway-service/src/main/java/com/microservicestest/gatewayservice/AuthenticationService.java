@@ -31,7 +31,7 @@ public class AuthenticationService {
 	
     
     @Value("${server.landingpage}")
-    private String landingpage;
+    private String serverLandingPage;
     
     @Value("${serviceone.appname}")
     private String serviceAppName;
@@ -47,9 +47,13 @@ public class AuthenticationService {
 			
 			Application application = eurekaClient.getApplication(serviceAppName);
 			InstanceInfo instanceInfo = application.getInstances().get(0);
-		    RequestDispatcher dispatcher = req.getServletContext()
-		    	      .getRequestDispatcher("/"+"service-one"+"/"+landingpage);
-		    	    dispatcher.forward(req, resp);
+			
+			// Use this to forward the request
+		    /*RequestDispatcher dispatcher = req.getServletContext()
+		    	      .getRequestDispatcher("/"+instanceInfo.getAppName().toLowerCase()+"/"+landingpage);
+		    	    dispatcher.forward(req, resp); */
+			
+		    resp.sendRedirect(req.getContextPath() + "/"+instanceInfo.getAppName().toLowerCase()+"/"+serverLandingPage);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

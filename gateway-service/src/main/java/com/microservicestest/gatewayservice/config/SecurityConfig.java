@@ -22,11 +22,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable().authorizeRequests().antMatchers("/admin/**").hasRole("ADMIN").antMatchers("/anonymous*")
-				.anonymous().antMatchers("/login*").permitAll().anyRequest().authenticated()
+				.anonymous().antMatchers("/login*").permitAll()
+				.antMatchers("/style/**", "/images/**", "/js/**","/css/**").permitAll()
+				.anyRequest().authenticated()
 				.and()
 				.formLogin()
 				.loginPage("/login")
-				.defaultSuccessUrl("/loadsuccesspage", false)
+				.defaultSuccessUrl("/loadsuccesspage", true)
 				.failureUrl("/logout");
 	}
 	
